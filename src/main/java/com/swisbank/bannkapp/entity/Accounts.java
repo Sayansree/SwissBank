@@ -1,5 +1,7 @@
 package com.swisbank.bannkapp.entity;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,6 +12,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 enum AccState{
 	PROCESSING,
 	ACTIVE,
@@ -27,7 +30,14 @@ public class Accounts {
 	//@Column(name="userID", length=11,nullable=false,unique=false)
 	private User owner;
 	
-	@Column(name="balance", precision=20)
+	//@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="sender")
+	private List<Transactions> TX;
+	@OneToMany(mappedBy="receiver")
+	private List<Transactions> RX;
+	
+	
+	@Column(name="balance",nullable=false)
 	private double balance;
 	
 	@Column(name="state")

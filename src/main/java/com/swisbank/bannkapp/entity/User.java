@@ -20,6 +20,14 @@ public class User {
 	@Column(name="userID",length=11,nullable=false,unique=true)
 	private int userID;
 	
+	public List<Accounts> getAccnts() {
+		return accnts;
+	}
+
+
+	public void setAccnts(List<Accounts> accnts) {
+		this.accnts = accnts;
+	}
 	@Column(name="passwordHash",length=255, nullable=false,unique=false)
 	private String passwordHash;
 	
