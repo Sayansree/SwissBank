@@ -1,5 +1,6 @@
 package com.swisbank.bannkapp.entity;
 
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.Column;
@@ -7,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,21 +16,24 @@ import jakarta.persistence.Table;
 public class User {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="userID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE)
+	@Column(name="userID",length=11,nullable=false,unique=true)
 	private int userID;
 	
-	@Column(name="passwordHash")
+	@Column(name="passwordHash",length=255, nullable=false,unique=false)
 	private String passwordHash;
 	
-	@Column(name="phone")
+	@Column(name="phone",length=10,nullable=false,unique=false)
 	private Long phone;
 	
-	@Column(name="email")
+	@Column(name="email",length=50,nullable=false,unique=true)
 	private String email;
 	
-	@Column(name="name")
+	@Column(name="name",length=50,nullable=false,unique=false)
 	private String name;
+	
+	@OneToMany(mappedBy="owner")
+	private List<Accounts> accnts;
 		
 		public User() {
 			
