@@ -1,6 +1,7 @@
 package com.swisbank.bannkapp.entity;
 
 import java.util.List;
+import java.util.Objects;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -42,5 +43,74 @@ public class Accounts {
 	
 	@Column(name="state")
 	@Enumerated(EnumType.STRING)
-	private AccState state; 
+	private AccState state;
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(RX, TX, accountID, balance, owner, state);
+	}
+
+	public long getAccountID() {
+		return accountID;
+	}
+
+	public void setAccountID(long accountID) {
+		this.accountID = accountID;
+	}
+
+	public User getOwner() {
+		return owner;
+	}
+
+	public void setOwner(User owner) {
+		this.owner = owner;
+	}
+
+	public List<Transactions> getTX() {
+		return TX;
+	}
+
+	public void setTX(List<Transactions> tX) {
+		TX = tX;
+	}
+
+	public List<Transactions> getRX() {
+		return RX;
+	}
+
+	public void setRX(List<Transactions> rX) {
+		RX = rX;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	public AccState getState() {
+		return state;
+	}
+
+	public void setState(AccState state) {
+		this.state = state;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Accounts other = (Accounts) obj;
+		return Objects.equals(RX, other.RX) && Objects.equals(TX, other.TX) && accountID == other.accountID
+				&& Double.doubleToLongBits(balance) == Double.doubleToLongBits(other.balance)
+				&& Objects.equals(owner, other.owner) && state == other.state;
+	} 
+	
+	
 }
