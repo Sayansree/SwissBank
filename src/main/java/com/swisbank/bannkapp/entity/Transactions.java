@@ -5,6 +5,8 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -41,10 +43,12 @@ public class Transactions {
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="sender")
+	@JsonIgnore
 	private Accounts sender;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="receiver")
+	@JsonIgnore
 	private Accounts receiver;
 	
 	@Column(name="medium")
@@ -55,8 +59,19 @@ public class Transactions {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Timestamp timestamp;
 	
-	@Column(name="remarks",length=255,nullable=false,unique=true)
+	@Column(name="remarks",length=255,nullable=false,unique=false)
 	private String remarks;
+	
+	@Column(name="ammount",length=255,nullable=false,unique=false)
+	private double ammount;
+
+	public double getAmmount() {
+		return ammount;
+	}
+
+	public void setAmmount(double ammount) {
+		this.ammount = ammount;
+	}
 
 	public long getTxid() {
 		return txid;
@@ -86,8 +101,27 @@ public class Transactions {
 		return medium;
 	}
 
+	public Accounts getSender() {
+		return sender;
+	}
+
+	public void setSender(Accounts sender) {
+		this.sender = sender;
+	}
+
+	public Accounts getReceiver() {
+		return receiver;
+	}
+
+	public void setReceiver(Accounts receiver) {
+		this.receiver = receiver;
+	}
+
 	public void setMedium(TransMed medium) {
 		this.medium = medium;
+	}
+	public void setMedium(String medium) {
+		this.medium = TransMed.valueOf(medium);
 	}
 
 	public Timestamp getTimestamp() {
@@ -106,7 +140,10 @@ public class Transactions {
 		this.remarks = remarks;
 	}
 
-	public Transactions(long txid, Accounts sender, Accounts receiver, TransMed medium, Timestamp timestamp, String remarks) {
+
+
+	public Transactions(long txid, Accounts sender, Accounts receiver, TransMed medium, Timestamp timestamp,
+			String remarks, double ammount) {
 		super();
 		this.txid = txid;
 		this.sender = sender;
@@ -114,6 +151,7 @@ public class Transactions {
 		this.medium = medium;
 		this.timestamp = timestamp;
 		this.remarks = remarks;
+		this.ammount = ammount;
 	}
 
 	public Transactions() {

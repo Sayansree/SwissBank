@@ -3,6 +3,9 @@ package com.swisbank.bannkapp.entity;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -14,27 +17,40 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-enum AccState{
-	PROCESSING,
-	ACTIVE,
-	SUSPENDED
-}
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.persistence.Table;
+//enum AccState{
+//	PROCESSING,
+//	ACTIVE,
+//	SUSPENDED
+//}
 @Entity
+@Table(name="Accounts")
 public class Accounts {
 	@Id
 	@Column(name="accountID",length=11,nullable=false,unique=true)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE)
 	private long accountID;
 	
+	@OneToOne(mappedBy="account")
+	@PrimaryKeyJoinColumn
+	@JsonIgnore
+	private AccountDetails details;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="userID")
+	@JsonIgnore
 	//@Column(name="userID", length=11,nullable=false,unique=false)
 	private User owner;
 	
 	//@OneToMany(fetch=FetchType.LAZY)
 	@OneToMany(mappedBy="sender")
+	@JsonIgnore
 	private List<Transactions> TX;
+	
 	@OneToMany(mappedBy="receiver")
+	@JsonIgnore
 	private List<Transactions> RX;
 	
 	
@@ -44,6 +60,33 @@ public class Accounts {
 	@Column(name="state")
 	@Enumerated(EnumType.STRING)
 	private AccState state;
+
+	
+
+	public Accounts(long accountID, AccountDetails details, User owner, List<Transactions> tX, List<Transactions> rX,
+			double balance, AccState state) {
+		super();
+		this.accountID = accountID;
+		this.details = details;
+		this.owner = owner;
+		TX = tX;
+		RX = rX;
+		this.balance = balance;
+		this.state = state;
+	}
+
+	public Accounts() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public AccountDetails getDetails() {
+		return details;
+	}
+
+	public void setDetails(AccountDetails details) {
+		this.details = details;
+	}
 
 	@Override
 	public int hashCode() {
@@ -65,7 +108,7 @@ public class Accounts {
 	public void setOwner(User owner) {
 		this.owner = owner;
 	}
-
+	@JsonIgnore
 	public List<Transactions> getTX() {
 		return TX;
 	}
@@ -73,7 +116,7 @@ public class Accounts {
 	public void setTX(List<Transactions> tX) {
 		TX = tX;
 	}
-
+	@JsonIgnore
 	public List<Transactions> getRX() {
 		return RX;
 	}

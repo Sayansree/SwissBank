@@ -48,9 +48,12 @@ public class userController {
 	}
 	
 	@GetMapping("/info/{uid}")//working,admin,user auth
-	Optional<User> getDetails(@PathVariable String uid) {
+	User getDetails(@PathVariable String uid) {
 		
-		return um.getDetails(Long.valueOf(uid));
+		Optional<User> uu= um.getDetails(Long.valueOf(uid));
+		if(uu.isEmpty())return null;
+		uu.get().setPasswordHash("");
+		return uu.get();
 	}
 	@DeleteMapping("/delete/{uid}")//working, check for admin,user auth
 	boolean delete(@PathVariable String uid) {		

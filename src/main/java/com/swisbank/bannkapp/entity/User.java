@@ -3,6 +3,8 @@ package com.swisbank.bannkapp.entity;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,6 +31,7 @@ public class User {
 		this.accnts = accnts;
 	}
 	@Column(name="passwordHash",length=255, nullable=false,unique=false)
+	@JsonIgnore
 	private String passwordHash;
 	
 	@Column(name="phone",length=10,nullable=false,unique=false)
@@ -41,6 +44,7 @@ public class User {
 	private String name;
 	
 	@OneToMany(mappedBy="owner")
+	@JsonIgnore
 	private List<Accounts> accnts;
 		
 		public User() {

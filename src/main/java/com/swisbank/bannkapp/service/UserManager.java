@@ -53,6 +53,11 @@ public class UserManager {
 //		return 
 		
 	}
+	public User getUserById(long uid) {
+		Optional<User> u=userData.findById(uid);
+		if(u.isEmpty())return null;
+		return u.get();
+	}
 	
 	
 }

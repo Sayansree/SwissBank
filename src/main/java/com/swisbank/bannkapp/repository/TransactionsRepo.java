@@ -12,4 +12,5 @@ import com.swisbank.bannkapp.entity.Transactions;
 @Repository
 public interface TransactionsRepo extends JpaRepository<Transactions,Long> {
 	public List<Transactions> findAllBySenderInOrReceiverIn(List<Accounts> l1,List <Accounts> l2);
+	public List<Transactions> findAllBySenderOrReceiver( Accounts a1,Accounts a2);
 }
