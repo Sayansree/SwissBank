@@ -1,5 +1,6 @@
 package com.swisbank.bannkapp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.swisbank.bannkapp.entity.TransObjResp;
 import com.swisbank.bannkapp.entity.TransactionRequest;
 import com.swisbank.bannkapp.entity.TransactionResponse;
 import com.swisbank.bannkapp.entity.Transactions;
@@ -28,14 +30,49 @@ public class TransactionController {
 	@Autowired
 	private NetBankingManager nbm;
 	@GetMapping("/user/{uid}")
-	public List<Transactions>getDetailsUid(@PathVariable String uid) {
-		
-		return tm.getTransactionsUid(Long.valueOf(uid));
+	public List<TransObjResp>getDetailsUid(@PathVariable String uid) {
+		long UID=Long.valueOf(uid);
+		List<Transactions> tx= tm.getTransactionsUid(UID);
+		List<TransObjResp> tres=new ArrayList<TransObjResp>();
+		for(Transactions t:tx) {
+			String mode;
+			if(t.getReceiver().getAccountID()==-1)
+				mode="WITHDRAWAL";
+			else if(t.getSender().getAccountID()==-1)
+				mode="DEPOSIT";
+			else if(t.getSender().getOwner().getUserID()!=UID)
+				mode="CREDIT";
+			else if(t.getReceiver().getOwner().getUserID()!=UID)
+				mode="DEBIT";
+			else
+				mode="SELF";
+			TransObjResp obj=new TransObjResp(t,mode);
+			tres.add(obj);
+		}
+		return tres;
 	}
 	@GetMapping("/account/{aid}")
-	public List<Transactions>getDetailsAid(@PathVariable String aid) {
+	public List<TransObjResp>getDetailsAid(@PathVariable String aid) {
 		
-		return tm.getTransactionsAid(Long.valueOf(aid));
+		long AID=Long.valueOf(aid);
+		List<Transactions> tx= tm.getTransactionsAid(AID);
+		List<TransObjResp> tres=new ArrayList<TransObjResp>();
+		for(Transactions t:tx) {
+			String mode;
+			if(t.getReceiver().getAccountID()==-1)
+				mode="WITHDRAWAL";
+			else if(t.getSender().getAccountID()==-1)
+				mode="DEPOSIT";
+			else if(t.getSender().getAccountID()!=AID)
+				mode="CREDIT";
+			else if(t.getReceiver().getAccountID()!=AID)
+				mode="DEBIT";
+			else
+				mode="SELF";
+			TransObjResp obj=new TransObjResp(t,mode);
+			tres.add(obj);
+		}
+		return tres;
 	}
 	@PostMapping("/transfer")
 	public TransactionResponse transfer(@RequestBody TransactionRequest tr) {

@@ -51,7 +51,7 @@ public class Transactions {
 	@Enumerated(EnumType.STRING)
 	private TransMed medium;
 	
-	@Column(name="timestamp",insertable=false,updatable=false)
+	@Column(name="timestamp",columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP",insertable=false,updatable=false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Timestamp timestamp;
 	

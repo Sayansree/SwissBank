@@ -63,7 +63,7 @@ public class TransManager {
 	}
 	public boolean transactionLog(long aid1,long aid2,String mode,double amt,String rem) {
 		Transactions t=new Transactions();
-		t.setTimestamp(Timestamp.from(Instant.now()));
+		//t.setTimestamp(Timestamp.from(Instant.now()));
 		t.setMedium(mode);
 		t.setRemarks(rem);
 		t.setAmmount(amt);

@@ -76,6 +76,17 @@ public class TransObjResp {
 		this.remarks = remarks;
 		this.category = category;
 	}
+	public TransObjResp(Transactions tx, String category) {
+		super();
+		this.sender = tx.getSender().getAccountID();
+		this.receiver = tx.getReceiver().getAccountID();
+		this.medium = tx.getMedium();
+		this.timestamp = tx.getTimestamp();
+		this.ammount = tx.getAmmount();
+		this.txid = tx.getTxid();
+		this.remarks = tx.getRemarks();
+		this.category = category;
+	}
 	
 	
 }
