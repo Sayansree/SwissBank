@@ -32,7 +32,7 @@ public class TransactionResponse {
 	public TransactionResponse(int errcode) {
 		super();
 		success=errcode==0; 
-
+		this.errcode=errcode;
 		switch(errcode) {
 		case 0:message="transaction complete";break;
 		case 1:message="incorrect sender account number";break;
@@ -42,7 +42,10 @@ public class TransactionResponse {
 		case 5:message ="insufficient balance";break;
 		case 6:message ="ammount cant be negative"; break;
 		case 7:message ="internal server error";break;
-		}
+		
+		case 8:message="net banking hasen't been setup";break;
+		case 9:message="netbanking password mismatch";break;
+			}
 	}
 	
 }

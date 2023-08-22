@@ -21,11 +21,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 
-enum TransMed{
-	IMPS,
-	NEFT,
-	RTGS
-}
+
 
 @Entity
 @Table(name="transactions")

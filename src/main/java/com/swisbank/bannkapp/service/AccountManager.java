@@ -44,7 +44,9 @@ public class AccountManager {
 		System.out.println(u.getAccnts().size());
 		return u.getAccnts();
 	}
-	
+	public boolean isPresent(long aid) {
+		return getAccountById(aid)!=null;
+	}
 	//get account details from account id
 	public boolean debit(Long aid,double amt) {
 		Accounts a=getAccountById(aid);
@@ -68,6 +70,20 @@ public class AccountManager {
 		Optional<Accounts> a =accntTable.findById(aid);
 		if(a.isEmpty())return false;
 		return a.get().getState()==AccState.ACTIVE;
+	}
+	public boolean Activate(Long aid) {
+		Optional<Accounts> a =accntTable.findById(aid);
+		if(a.isEmpty())return false;
+		a.get().setState(AccState.ACTIVE);
+		Accounts b=accntTable.save(a.get());
+		return b.getState()==AccState.ACTIVE;
+	}
+	public boolean Suspend(Long aid) {
+		Optional<Accounts> a =accntTable.findById(aid);
+		if(a.isEmpty())return false;
+		a.get().setState(AccState.SUSPENDED);
+		Accounts b=accntTable.save(a.get());
+		return b.getState()==AccState.SUSPENDED;
 	}
 	
 	//create account 

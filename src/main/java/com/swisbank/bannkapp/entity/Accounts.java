@@ -38,6 +38,12 @@ public class Accounts {
 	@JsonIgnore
 	private AccountDetails details;
 	
+	
+	@OneToOne(mappedBy="account")
+	@PrimaryKeyJoinColumn
+	@JsonIgnore
+	private NetBanking netbanking;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="userID")
 	@JsonIgnore
@@ -78,6 +84,14 @@ public class Accounts {
 	public Accounts() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public NetBanking getNetbanking() {
+		return netbanking;
+	}
+
+	public void setNetbanking(NetBanking netbanking) {
+		this.netbanking = netbanking;
 	}
 
 	public AccountDetails getDetails() {

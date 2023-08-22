@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.swisbank.bannkapp.entity.TransactionRequest;
 import com.swisbank.bannkapp.entity.TransactionResponse;
 import com.swisbank.bannkapp.entity.Transactions;
+import com.swisbank.bannkapp.service.NetBankingManager;
 import com.swisbank.bannkapp.service.TransManager;
 
 @CrossOrigin
@@ -24,7 +25,8 @@ import com.swisbank.bannkapp.service.TransManager;
 public class TransactionController {
 	@Autowired
 	private TransManager tm;
-	
+	@Autowired
+	private NetBankingManager nbm;
 	@GetMapping("/user/{uid}")
 	public List<Transactions>getDetailsUid(@PathVariable String uid) {
 		
@@ -37,6 +39,10 @@ public class TransactionController {
 	}
 	@PostMapping("/transfer")
 	public TransactionResponse transfer(@RequestBody TransactionRequest tr) {
+		if(!nbm.isPresent(tr.getSenderAID()))
+			return new TransactionResponse(8);
+		if(!nbm.getPass(tr.getSenderAID()).equals(tr.getPassword()))
+			return new TransactionResponse(9);
 		TransactionResponse tresp=tm.transfer(tr.getSenderAID(), tr.getReceiverAID(), tr.getAmmount());
 		//return tm.getTransactionsAid(Long.valueOf(aid));
 		if(tresp.isSuccess())
