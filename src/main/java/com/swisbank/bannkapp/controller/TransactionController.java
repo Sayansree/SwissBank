@@ -29,6 +29,26 @@ public class TransactionController {
 	private TransManager tm;
 	@Autowired
 	private NetBankingManager nbm;
+	@GetMapping("/all")
+	public List<TransObjResp>getAllTransactions() {
+		//long UID=Long.valueOf(uid);
+		List<Transactions> tx= tm.getAllTransactions();
+		List<TransObjResp> tres=new ArrayList<TransObjResp>();
+		for(Transactions t:tx) {
+			String mode;
+			if(t.getReceiver().getAccountID()==-1)
+				mode="WITHDRAWAL";
+			else if(t.getSender().getAccountID()==-1)
+				mode="DEPOSIT";
+			else if(t.getSender().getOwner().getUserID()==t.getReceiver().getOwner().getUserID())
+				mode="SELF TRANSFER";
+			else
+				mode="TRANSFER";
+			TransObjResp obj=new TransObjResp(t,mode);
+			tres.add(obj);
+		}
+		return tres;
+	}
 	@GetMapping("/user/{uid}")
 	public List<TransObjResp>getDetailsUid(@PathVariable String uid) {
 		long UID=Long.valueOf(uid);

@@ -10,6 +10,7 @@ import com.swisbank.bannkapp.entity.User;
 @Repository
 public interface AccountsRepo extends JpaRepository<Accounts,Long> {
 List<Accounts> findAllByOwner(User u);
+List<Accounts> findAllByStateInAndBalanceBetweenAndAccountIDNot(List<AccState> ac,double min,double max,long id);
 //List<Accounts> findAllByStateOrderByBalanceAsc(AccState ac);
 //List<Accounts> findAllByStateOrderByBalanceDesc(AccState ac);
 //List<Accounts> findAllOrderByBalanceAsc();

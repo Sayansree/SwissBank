@@ -1,10 +1,7 @@
 package com.swisbank.bannkapp.entity;
 
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Objects;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -51,7 +48,7 @@ public class Transactions {
 	@Enumerated(EnumType.STRING)
 	private TransMed medium;
 	
-	@Column(name="timestamp",columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP",insertable=false,updatable=false)
+	@Column(name="timestamp",columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Timestamp timestamp;
 	

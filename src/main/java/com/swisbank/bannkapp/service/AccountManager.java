@@ -1,5 +1,6 @@
 package com.swisbank.bannkapp.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,14 @@ public class AccountManager {
 	@Autowired
 	private UserManager um;
 	
+	public List<Accounts> accountsFilter(List<String> state,double min,double max) {
+		List<AccState> st=new ArrayList<AccState>();
+		for(String s:state) {
+			st.add(AccState.valueOf(s));
+		}
+		List<Accounts> a =accntTable.findAllByStateInAndBalanceBetweenAndAccountIDNot(st,min,max,-1);
+		return a;
+	}
 	//get account from account id
 	public Accounts getAccountById(Long aid) {
 		Optional<Accounts> a =accntTable.findById(aid);

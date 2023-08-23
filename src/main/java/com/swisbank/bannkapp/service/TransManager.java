@@ -3,18 +3,13 @@ package com.swisbank.bannkapp.service;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.List;
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.swisbank.bannkapp.entity.Accounts;
 import com.swisbank.bannkapp.entity.TransactionResponse;
 import com.swisbank.bannkapp.entity.Transactions;
-import com.swisbank.bannkapp.entity.User;
-import com.swisbank.bannkapp.repository.AccountsRepo;
 import com.swisbank.bannkapp.repository.TransactionsRepo;
-import com.swisbank.bannkapp.repository.UserRepo;
 
 
 
@@ -29,6 +24,9 @@ public class TransManager {
 //	@Autowired
 //	private UserManager um;
 	
+	public List<Transactions>getAllTransactions(){
+		return transTable.findAll();
+	}
 	public List<Transactions>getTransactionsUid(long uid){
 		List<Accounts> la= am.getAccountsOfUser(uid);
 		if (la==null)return null;
@@ -67,7 +65,7 @@ public class TransManager {
 		if(am.getAccountById(aid1)==null) return new TransactionResponse(1);
 		if (!am.isActive(aid1))return  new TransactionResponse(3);
 		if(!am.debit(aid1,amt))return  new TransactionResponse(5);
-		return  new TransactionResponse(7);
+		return  new TransactionResponse(0);
 	}
 	public TransactionResponse deposit(long aid2,double amt){
 		if(amt<=0)return new TransactionResponse(6);
@@ -78,7 +76,7 @@ public class TransManager {
 	}
 	public boolean transactionLog(long aid1,long aid2,String mode,double amt,String rem) {
 		Transactions t=new Transactions();
-		//t.setTimestamp(Timestamp.from(Instant.now()));
+		t.setTimestamp(Timestamp.from(Instant.now()));
 		t.setMedium(mode);
 		t.setRemarks(rem);
 		t.setAmmount(amt);

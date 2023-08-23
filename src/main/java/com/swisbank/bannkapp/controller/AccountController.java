@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.swisbank.bannkapp.entity.AccFilter;
 import com.swisbank.bannkapp.entity.AccountDetails;
 import com.swisbank.bannkapp.entity.Accounts;
 import com.swisbank.bannkapp.service.AccountManager;
@@ -23,6 +24,11 @@ import com.swisbank.bannkapp.service.AccountManager;
 public class AccountController {
 	@Autowired
 	private AccountManager am;
+	
+	@PostMapping("/filter")//admin only
+	List<Accounts> getAccountFilter(@RequestBody AccFilter af){
+		return am.accountsFilter(af.getStates(),af.getMinBal(),af.getMaxBal());
+	}
 	
 	@GetMapping("/summary/{uid}")
 	List <Accounts> getAccountSummary(@PathVariable String uid){
