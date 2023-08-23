@@ -86,5 +86,22 @@ public class TransactionController {
 			tm.transactionLog(tr.getSenderAID(), tr.getReceiverAID(), tr.getMode(), tr.getAmmount(), tr.getRemarks());
 	return tresp;
 	}
+	@PostMapping("/withdraw")//admin
+	public TransactionResponse withdraw(@RequestBody TransactionRequest tr) {
+		TransactionResponse tresp=tm.withdraw(tr.getSenderAID(), tr.getAmmount());
+		//return tm.getTransactionsAid(Long.valueOf(aid));
+		if(tresp.isSuccess())
+			tm.transactionLog(tr.getSenderAID(), -1, "IMPS", tr.getAmmount(), tr.getRemarks());
+	return tresp;
+	}
+	@PostMapping("/deposit")//admin
+	public TransactionResponse deposit(@RequestBody TransactionRequest tr) {
+		
+		TransactionResponse tresp=tm.deposit( tr.getReceiverAID(), tr.getAmmount());
+		//return tm.getTransactionsAid(Long.valueOf(aid));
+		if(tresp.isSuccess())
+			tm.transactionLog(-1, tr.getReceiverAID(),"IMPS", tr.getAmmount(), tr.getRemarks());
+	return tresp;
+	}
 	
 }

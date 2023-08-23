@@ -34,10 +34,10 @@ public class userController {
 	@Autowired
 	AuthManager am;
 	
-//	@GetMapping("/getAll")
-//	 List<User> getUser() {
-//		return UsrTable.findAll();
-//	}
+	@GetMapping("/getAll")//admin only
+	 List<User> getUser() {
+		return um.findAll();
+	}
 	@GetMapping("/test")
 	String test() {
 		return "Hello world!";

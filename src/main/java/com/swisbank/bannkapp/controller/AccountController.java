@@ -28,6 +28,14 @@ public class AccountController {
 	List <Accounts> getAccountSummary(@PathVariable String uid){
 		return am.getAccountsOfUser(Long.valueOf(uid));
 	}
+	@GetMapping("/activate/{aid}")//admin only
+	public boolean Activate(@PathVariable String aid){
+		return am.Activate(Long.valueOf(aid));
+	}
+	@GetMapping("/suspend/{aid}")//admin only
+	public boolean Suspend(@PathVariable String aid){
+		return am.Suspend(Long.valueOf(aid));
+	}
 	@GetMapping("/details/{aid}")
 	 AccountDetails getAccountDetails(@PathVariable String aid){
 		return am.getAccountDetailsById(Long.valueOf(aid));

@@ -15,13 +15,14 @@ public class UserManager {
 	@Autowired
 	private UserRepo userData;
 	
+	public List<User> findAll(){
+		return userData.findAll();
+	}
 	public boolean emailExists(String email) {
 		 List<User> rows=userData.findByEmail(email);
 		 return rows.size()==1;
 	}
-//	public boolean phoneExists(Long num) {
-//		return true;
-//	}
+
 	public boolean removeUser(Long uid) {
 		userData.deleteById(uid);;
 		return !userData.existsById(uid);
