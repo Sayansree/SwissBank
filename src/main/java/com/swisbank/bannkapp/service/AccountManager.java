@@ -13,7 +13,6 @@ import com.swisbank.bannkapp.entity.Accounts;
 import com.swisbank.bannkapp.entity.User;
 import com.swisbank.bannkapp.repository.AccDetailsRepo;
 import com.swisbank.bannkapp.repository.AccountsRepo;
-import com.swisbank.bannkapp.repository.UserRepo;
 
 @Service
 public class AccountManager {

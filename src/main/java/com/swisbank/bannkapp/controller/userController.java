@@ -18,7 +18,6 @@ import com.swisbank.bannkapp.entity.AuthReq;
 import com.swisbank.bannkapp.entity.AuthStatus;
 import com.swisbank.bannkapp.entity.User;
 import com.swisbank.bannkapp.entity.UserStatus;
-import com.swisbank.bannkapp.repository.UserRepo ;
 import com.swisbank.bannkapp.service.AuthManager;
 import com.swisbank.bannkapp.service.UserManager;
 //import ja
@@ -63,6 +62,15 @@ public class userController {
 	@PostMapping("/auth") //working
 	AuthStatus login(@RequestBody AuthReq authobj) {
 		return am.matchPassword(authobj.getEmail(), authobj.getPasswordHash());
+	}
+	
+	@PostMapping("/adminauth") //working
+	AuthStatus loginadmin(@RequestBody AuthReq authobj) {
+		if(!"admin".equals(authobj.getEmail()))
+				return new AuthStatus(false,1,0L);
+		if("1234".equals(authobj.getPasswordHash()))
+			return new AuthStatus(true,0,0L);
+		return new AuthStatus(false,2,0L);
 	}
 	
 }
