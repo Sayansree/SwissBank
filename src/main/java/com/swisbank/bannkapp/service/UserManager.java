@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.swisbank.bannkapp.entity.UserStatus;
+import com.swisbank.bannkapp.entity.Roles;
 import com.swisbank.bannkapp.entity.User;
 import com.swisbank.bannkapp.repository.UserRepo;
 
@@ -33,7 +34,9 @@ public class UserManager {
 		if(emailExists(u.getEmail())) {
 			return new UserStatus(false,1);
 		}
+		u.setRole(Roles.USER);
 		User res = userData.save(u);
+		
 		if( res.equals(u))
 			return new UserStatus(true,0);
 		else

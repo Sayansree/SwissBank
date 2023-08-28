@@ -13,14 +13,18 @@ import com.swisbank.bannkapp.repository.UserRepo;
 public class AuthManager {
 	@Autowired
 	private UserRepo userData;
-	
+	@Autowired
+	private JwtService jwts;
 	public AuthStatus matchPassword(String email,String pass) {
 		 List<User> rows=userData.findByEmail(email);
 		 if(rows.size()==0)return new AuthStatus(false,1,0L);
 		 User u=rows.get(0);
-		 if(u.getPasswordHash().equals(pass))
-			 return new AuthStatus(true,0,(long)u.getUserID());
-		 else
+		 if(u.getPasswordHash().equals(pass)) {
+			 String token=jwts.generateToken(u);
+			 AuthStatus as= new AuthStatus(true,0,(long)u.getUserID());
+			 as.setAccessToken(token);
+			 return as;
+		 }else
 			 return new AuthStatus(false,2,0L);
 	}
 //	public boolean phoneExists(Long num) {

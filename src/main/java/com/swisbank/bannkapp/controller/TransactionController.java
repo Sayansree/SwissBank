@@ -55,6 +55,7 @@ public class TransactionController {
 		List<Transactions> tx= tm.getTransactionsUid(UID);
 		List<TransObjResp> tres=new ArrayList<TransObjResp>();
 		for(Transactions t:tx) {
+			//t.getProxyField();
 			String mode;
 			if(t.getReceiver().getAccountID()==-1)
 				mode="WITHDRAWAL";

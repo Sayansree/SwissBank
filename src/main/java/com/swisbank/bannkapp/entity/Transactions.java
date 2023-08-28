@@ -34,12 +34,12 @@ public class Transactions {
 //	@Column(name="receiver",length=11,nullable=false,unique=true)
 //	private long receiver;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="sender")
 	@JsonIgnore
 	private Accounts sender;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="receiver")
 	@JsonIgnore
 	private Accounts receiver;

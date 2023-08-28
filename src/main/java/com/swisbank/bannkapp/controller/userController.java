@@ -19,6 +19,7 @@ import com.swisbank.bannkapp.entity.AuthStatus;
 import com.swisbank.bannkapp.entity.User;
 import com.swisbank.bannkapp.entity.UserStatus;
 import com.swisbank.bannkapp.service.AuthManager;
+import com.swisbank.bannkapp.service.JwtService;
 import com.swisbank.bannkapp.service.UserManager;
 //import ja
 @CrossOrigin
@@ -33,6 +34,7 @@ public class userController {
 	@Autowired
 	AuthManager am;
 	
+	
 	@GetMapping("/getAll")//admin only
 	 List<User> getUser() {
 		return um.findAll();
@@ -40,6 +42,18 @@ public class userController {
 	@GetMapping("/test")
 	String test() {
 		return "Hello world!";
+	}
+	@GetMapping("/testUser")
+	String testUser() {
+		return "Hello User!";
+	}
+	@GetMapping("/testAdmin")
+	String testAdmin() {
+		return "Hello Admin!";
+	}
+	@GetMapping("/testAuth")
+	String testAuth() {
+		return "Hello Auth!";
 	}
 	@PostMapping("/register")//working, no auth
 	UserStatus register(@RequestBody User newUser) {
@@ -61,7 +75,9 @@ public class userController {
 	
 	@PostMapping("/auth") //working
 	AuthStatus login(@RequestBody AuthReq authobj) {
-		return am.matchPassword(authobj.getEmail(), authobj.getPasswordHash());
+		AuthStatus as= am.matchPassword(authobj.getEmail(), authobj.getPasswordHash());
+		
+		return as;
 	}
 	
 	@PostMapping("/adminauth") //working
