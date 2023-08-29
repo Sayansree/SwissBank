@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.swisbank.bannkapp.entity.AccountDetails;
 import com.swisbank.bannkapp.entity.User;
 import com.swisbank.bannkapp.service.SearchEngine;
+import com.swisbank.bannkapp.service.UserManager;
 
 
 @CrossOrigin
@@ -21,6 +22,21 @@ import com.swisbank.bannkapp.service.SearchEngine;
 public class SearchController {
 	@Autowired
 	SearchEngine se;
+	@Autowired
+	UserManager um;
+	
+	@GetMapping("/user/name/")
+	List<User> getUserByName() {
+		return um.findAll();
+	}
+	@GetMapping("/user/email/")
+	List<User> getUserByEmail() {
+		return um.findAll();
+	}
+	@GetMapping("/user/phone/")
+	 List<User> getUserByPhone() {
+		return um.findAll();
+	}
 	
 	
 	@GetMapping("/user/name/{name}")//admin only

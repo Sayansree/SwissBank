@@ -162,6 +162,8 @@ public class User implements UserDetails{
 
 
 		@Override
+		@JsonIgnore
+
 		public Collection<? extends GrantedAuthority> getAuthorities() {
 			// TODO Auto-generated method stub
 			return List.of(new SimpleGrantedAuthority(role.name()));
@@ -169,13 +171,16 @@ public class User implements UserDetails{
 
 
 		@Override
+		@JsonIgnore
 		public String getPassword() {
 			// TODO Auto-generated method stub
 			return passwordHash;
 		}
 
 
-		@Override
+		@Override		
+		@JsonIgnore
+
 		public String getUsername() {
 			// TODO Auto-generated method stub
 			return String.valueOf(userID);
@@ -183,6 +188,8 @@ public class User implements UserDetails{
 
 
 		@Override
+		@JsonIgnore
+
 		public boolean isAccountNonExpired() {
 			// TODO Auto-generated method stub
 			return true;
@@ -190,6 +197,8 @@ public class User implements UserDetails{
 
 
 		@Override
+		@JsonIgnore
+
 		public boolean isAccountNonLocked() {
 			// TODO Auto-generated method stub
 			return true;
@@ -197,6 +206,8 @@ public class User implements UserDetails{
 
 
 		@Override
+		@JsonIgnore
+
 		public boolean isCredentialsNonExpired() {
 			// TODO Auto-generated method stub
 			return true;
@@ -204,6 +215,8 @@ public class User implements UserDetails{
 
 
 		@Override
+		@JsonIgnore
+
 		public boolean isEnabled() {
 			// TODO Auto-generated method stub
 			return true;

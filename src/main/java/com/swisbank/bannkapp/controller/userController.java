@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,12 +42,14 @@ public class userController {
 	}
 	@GetMapping("/test")
 	String test() {
+		
 		return "Hello world!";
 	}
 	@GetMapping("/testUser")
 	String testUser() {
 		return "Hello User!";
 	}
+	//@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("/testAdmin")
 	String testAdmin() {
 		return "Hello Admin!";
@@ -54,6 +57,10 @@ public class userController {
 	@GetMapping("/testAuth")
 	String testAuth() {
 		return "Hello Auth!";
+	}
+	@GetMapping("/testBoth")
+	String testBoth() {
+		return "Hello Both!";
 	}
 	@PostMapping("/register")//working, no auth
 	UserStatus register(@RequestBody User newUser) {
